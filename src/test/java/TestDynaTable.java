@@ -7,24 +7,19 @@ import java.sql.SQLException;
 import java.util.logging.Logger;
 import javax.xml.parsers.ParserConfigurationException;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.xml.sax.SAXException;
-import fr.woorib.xmltosql.DatabaseLoader;
+import fr.woorib.xmltosql.XmlDatasetRunner;
+import fr.woorib.xmltosql.XmlDatasource;
 import junit.framework.Assert;
 
+@RunWith(XmlDatasetRunner.class)
 public class TestDynaTable {
   Logger log = Logger.getLogger(this.getClass().getName());
-  static {
-    try {
-      Class.forName("org.hsqldb.jdbcDriver" );
-    }
-    catch (ClassNotFoundException e) {
-      e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-    }
 
-  }
   @Test
+  @XmlDatasource(file = "/data.xml")
   public void testGetSchema() throws SQLException, IOException, SAXException, ParserConfigurationException {
-    DatabaseLoader.loadDataSet(this.getClass().getResourceAsStream("/data.xml"));
     try (Connection sa = getConnection();
          PreparedStatement preparedStatement = sa.prepareStatement("select * from test where col1 = 'aa'");
          ResultSet resultSet = preparedStatement.executeQuery()) {
