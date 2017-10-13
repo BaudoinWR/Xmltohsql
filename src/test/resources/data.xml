@@ -1,0 +1,22 @@
+<dataset>
+  <test>
+    <col1>aa</col1>
+    <col2>bjla</col2>
+    <col3>nnnk</col3>
+  </test>
+  <test>
+    <col1>evce</col1>
+    <col2>b</col2>
+    <col3>nnnk</col3>
+  </test>
+  <test>
+    <col1>acqcq</col1>
+    <col2>bjldsqsda</col2>
+    <col3>nggnnk</col3>
+  </test>
+  <epci>
+    <epci>acqcq</epci>
+    <nom>bjldsqsda</nom>
+    <departement>nggnnk</departement>
+  </epci>
+</dataset>
