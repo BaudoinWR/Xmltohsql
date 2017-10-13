@@ -19,15 +19,28 @@ public class TestDynaTable {
 
   @Test
   @XmlDatasource(file = "/data.xml")
-  public void testGetSchema() throws SQLException, IOException, SAXException, ParserConfigurationException {
+  public void testSchemaGL() throws SQLException, IOException, SAXException, ParserConfigurationException {
     try (Connection sa = getConnection();
-         PreparedStatement preparedStatement = sa.prepareStatement("select * from test where col1 = 'aa'");
+         PreparedStatement preparedStatement = sa.prepareStatement("select * from $GL$.test where col1 = 'aa'");
          ResultSet resultSet = preparedStatement.executeQuery()) {
       Assert.assertEquals(1, resultSet.getFetchSize());
       resultSet.next();
       Assert.assertEquals("aa", resultSet.getString("col1"));
       Assert.assertEquals("bjla", resultSet.getString("col2"));
       Assert.assertEquals("nnnk", resultSet.getString("col3"));
+      resultSet.close();
+    }
+  }
+
+  public void testSchemaGF() throws SQLException, IOException, SAXException, ParserConfigurationException {
+    try (Connection sa = getConnection();
+         PreparedStatement preparedStatement = sa.prepareStatement("select * from $GF$.testgf where col1 = 'aa'");
+         ResultSet resultSet = preparedStatement.executeQuery()) {
+      Assert.assertEquals(1, resultSet.getFetchSize());
+      resultSet.next();
+      Assert.assertEquals("aa", resultSet.getString("col1"));
+      Assert.assertEquals("bla", resultSet.getString("col2"));
+      Assert.assertEquals("nnk", resultSet.getString("col3"));
       resultSet.close();
     }
   }

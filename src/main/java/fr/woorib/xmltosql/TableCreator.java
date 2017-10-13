@@ -20,12 +20,13 @@ public class TableCreator {
     lines.add(currentLine);
   }
 
-  @Override
-  public String toString() {
-    StringBuilder stringBuilder = new StringBuilder(lines.get(0).generateCreate(tableName));
+  public String generateSQL(String schemaName) {
+    String prefix = schemaName == null ? "":schemaName+".";
+    String prefixedTableName = prefix + this.tableName;
+    StringBuilder stringBuilder = new StringBuilder(lines.get(0).generateCreate(prefixedTableName));
     for (LineCreator line : lines) {
       stringBuilder.append("\n");
-      stringBuilder.append(line.generateInsert(tableName));
+      stringBuilder.append(line.generateInsert(prefixedTableName));
     }
     return stringBuilder.toString();
   }

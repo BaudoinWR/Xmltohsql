@@ -9,7 +9,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.Map;
+import java.util.List;
 import java.util.Scanner;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
@@ -26,12 +26,11 @@ public class DatabaseLoader {
     SAXParser saxParser = factory.newSAXParser();
     XmlToDbHandler handler = new XmlToDbHandler();
     saxParser.parse(xmlDataset, handler);
-    Map<String, TableCreator> tables = handler.tables;
-    System.out.println(tables);
+    List<SchemaCreator> schemas = handler.schemas;
     try {
       Connection sa = getConnection();
-      for (TableCreator tableCreator : tables.values()) {
-        Scanner stringReader = new Scanner(tableCreator.toString());
+      for (SchemaCreator schemaCreator : schemas) {
+        Scanner stringReader = new Scanner(schemaCreator.toString());
         while (stringReader.hasNextLine()) {
           PreparedStatement preparedStatement = sa.prepareStatement(stringReader.nextLine());
           preparedStatement.execute();
